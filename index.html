@@ -7,155 +7,121 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
-:root {
-  --navy: #0A1628;
-  --navy2: #132240;
-  --blue: #1A56DB;
-  --blue-light: #EBF0FF;
-  --teal: #0EA5E9;
-  --orange: #F97316;
-  --green: #10B981;
-  --yellow: #F59E0B;
-  --red: #EF4444;
-  --gray50: #F8FAFC;
-  --gray100: #F1F5F9;
-  --gray200: #E2E8F0;
-  --gray300: #CBD5E1;
-  --gray400: #94A3B8;
-  --gray600: #475569;
-  --gray700: #334155;
-  --gray900: #0F172A;
-  --white: #FFFFFF;
-  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.06);
-  --radius: 10px;
-  --radius-sm: 6px;
+:root{
+  --navy:#0A1628;--navy2:#132240;--blue:#1A56DB;--blue-l:#EBF0FF;
+  --green:#10B981;--yellow:#F59E0B;--red:#EF4444;--orange:#F97316;
+  --gray50:#F8FAFC;--gray100:#F1F5F9;--gray200:#E2E8F0;--gray300:#CBD5E1;
+  --gray400:#94A3B8;--gray600:#475569;--gray700:#334155;--gray900:#0F172A;
+  --white:#FFFFFF;--radius:10px;--radius-sm:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--gray50);color:var(--gray900);min-height:100vh;font-size:14px}
-
+body{font-family:'DM Sans',sans-serif;background:var(--gray50);color:var(--gray900);font-size:14px}
 /* HEADER */
-.header{background:var(--navy);padding:0 32px;display:flex;align-items:center;gap:16px;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.header-logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--orange),#F43F5E);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white}
-.header-title{font-size:15px;font-weight:600;color:white}
-.header-sub{font-size:11px;color:rgba(255,255,255,.45);margin-top:1px}
-.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
-.file-badge{font-size:11px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08);padding:4px 10px;border-radius:99px;cursor:pointer;transition:.15s}
-.file-badge.loaded{color:#34D399;background:rgba(52,211,153,.12)}
-.file-badge:hover{background:rgba(255,255,255,.12)}
-
+.hdr{background:var(--navy);padding:0 28px;display:flex;align-items:center;height:56px;position:sticky;top:0;z-index:100;gap:12px}
+.hdr-logo{width:30px;height:30px;background:linear-gradient(135deg,var(--orange),#F43F5E);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.hdr-title{font-size:14px;font-weight:600;color:#fff}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px}
+.file-btn{margin-left:auto;font-size:11px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08);padding:5px 12px;border-radius:99px;cursor:pointer;border:none;transition:.15s;font-family:'DM Sans',sans-serif}
+.file-btn:hover{background:rgba(255,255,255,.14)}
+.file-btn.loaded{color:#34D399;background:rgba(52,211,153,.12)}
 /* TABS */
-.tabs{background:white;border-bottom:1px solid var(--gray200);padding:0 32px;display:flex;gap:0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.tab-btn{padding:14px 20px;font-size:13px;font-weight:500;color:var(--gray400);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;white-space:nowrap;display:flex;align-items:center;gap:6px}
-.tab-btn:hover{color:var(--gray700)}
-.tab-btn.on{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
-.tab-badge{background:var(--red);color:white;border-radius:99px;padding:1px 6px;font-size:10px;font-weight:700}
-
+.tabs{background:#fff;border-bottom:1px solid var(--gray200);padding:0 28px;display:flex;gap:2px}
+.tab{padding:12px 16px;font-size:12px;font-weight:500;color:var(--gray400);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.tab:hover{color:var(--gray700)}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+.tbadge{background:var(--red);color:#fff;border-radius:99px;padding:1px 5px;font-size:10px;font-weight:700;margin-left:3px}
 /* MAIN */
-.main{padding:24px 32px;max-width:1400px;margin:0 auto}
-
-/* CARDS */
-.card{background:white;border-radius:var(--radius);border:1px solid var(--gray200);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
-.card-title{font-size:13px;font-weight:600;color:var(--gray700);margin-bottom:14px;display:flex;align-items:center;gap:7px}
-
-/* STATS GRID */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:16px}
-.stat{background:white;border:1px solid var(--gray200);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
-.stat-val{font-size:22px;font-weight:700;color:var(--gray900);font-family:'DM Mono',monospace}
-.stat-lbl{font-size:11px;color:var(--gray400);margin-top:3px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
-
+.main{padding:20px 28px;max-width:1400px;margin:0 auto}
+/* CARD */
+.card{background:#fff;border-radius:var(--radius);border:1px solid var(--gray200);padding:18px;margin-bottom:14px}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid var(--gray200);border-radius:var(--radius);padding:12px 14px}
+.stat-val{font-size:20px;font-weight:700;color:var(--gray900);font-family:'DM Mono',monospace}
+.stat-lbl{font-size:10px;color:var(--gray400);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;font-weight:500}
 /* FILTERS */
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:flex-end}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end}
 .fg{display:flex;flex-direction:column;gap:4px}
-.fl{font-size:10px;font-weight:700;color:var(--gray400);text-transform:uppercase;letter-spacing:.6px}
-select,input[type=date],input[type=number]{padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--gray200);font-size:13px;color:var(--gray900);background:white;outline:none;font-family:'DM Sans',sans-serif;transition:.15s;min-width:100px}
-select:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,86,219,.1)}
-
+.fl{font-size:10px;font-weight:700;color:var(--gray400);text-transform:uppercase;letter-spacing:.5px}
+select,input[type=date],input[type=number],input[type=text]{padding:7px 10px;border-radius:var(--radius-sm);border:1px solid var(--gray200);font-size:12px;color:var(--gray900);background:#fff;outline:none;font-family:'DM Sans',sans-serif}
+select:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,86,219,.08)}
+select[multiple]{height:120px;padding:4px}
+select[multiple] option{padding:4px 8px;border-radius:4px}
 /* TABLE */
 .tbl-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--gray200)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead tr{background:var(--navy);color:white}
-thead th{padding:10px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:var(--navy)}
+thead th{padding:9px 11px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:#fff;white-space:nowrap}
 tbody tr{border-bottom:1px solid var(--gray100);transition:.1s}
 tbody tr:hover{background:var(--gray50)}
 tbody tr:last-child{border-bottom:none}
-tbody td{padding:10px 12px;color:var(--gray700)}
-
+tbody td{padding:9px 11px;color:var(--gray700)}
+/* EDITABLE HOURS */
+.hrs-input{width:70px;padding:4px 6px;border:1px solid var(--gray200);border-radius:4px;font-size:12px;font-family:'DM Mono',monospace;text-align:center;color:var(--gray900);background:#fff}
+.hrs-input:focus{border-color:var(--blue);outline:none}
+.hrs-input.edited{border-color:var(--orange);background:#FFF7ED}
 /* BADGES */
-.badge{display:inline-block;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:600}
+.badge{display:inline-block;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:600}
 .b-ok{background:#D1FAE5;color:#065F46}
 .b-warn{background:#FEF3C7;color:#92400E}
 .b-danger{background:#FEE2E2;color:#991B1B}
-.b-info{background:var(--blue-light);color:var(--blue)}
+.b-info{background:var(--blue-l);color:var(--blue)}
 .b-muted{background:var(--gray100);color:var(--gray400)}
-
 /* PROGRESS */
-.prog-wrap{display:flex;align-items:center;gap:8px}
-.prog-bar{flex:1;height:6px;background:var(--gray200);border-radius:3px;overflow:hidden}
-.prog-fill{height:100%;border-radius:3px;transition:width .3s}
-.prog-lbl{font-size:12px;font-weight:600;min-width:36px;font-family:'DM Mono',monospace}
-
+.prog-wrap{display:flex;align-items:center;gap:6px}
+.prog-bar{flex:1;height:5px;background:var(--gray200);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px}
 /* UPLOAD */
-.upload-zone{border:2px dashed var(--gray300);border-radius:var(--radius);padding:40px 24px;text-align:center;cursor:pointer;transition:.2s;background:white}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--blue);background:var(--blue-light)}
-.upload-icon{font-size:40px;margin-bottom:12px;display:block}
-.upload-title{font-size:16px;font-weight:600;color:var(--gray900);margin-bottom:6px}
-.upload-sub{font-size:13px;color:var(--gray400);margin-bottom:20px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius-sm);border:none;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;font-family:'DM Sans',sans-serif}
-.btn-primary{background:var(--blue);color:white}
-.btn-primary:hover{background:#1347B8}
-.btn-secondary{background:var(--gray100);color:var(--gray700)}
-.btn-secondary:hover{background:var(--gray200)}
-.btn-info{background:var(--blue-light);color:var(--blue)}
-.btn-info:hover{background:#D6E4FF}
-
-/* ALERT CARD */
-.alert-item{border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;border:1px solid var(--gray200);border-left-width:4px;background:white;box-shadow:var(--shadow)}
-
-/* STEPS */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:16px}
-.step{background:var(--gray50);border:1px solid var(--gray200);border-radius:var(--radius-sm);padding:12px;display:flex;gap:10px;align-items:flex-start}
-.step-num{width:22px;height:22px;background:var(--blue);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
-.step-body p{font-size:12px;font-weight:600;color:var(--gray900);margin-bottom:2px}
-.step-body span{font-size:11px;color:var(--gray400)}
-
-/* REPORT PREVIEW */
-.report-header{background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;margin:-20px -20px 20px;padding:20px 24px}
-.report-header-title{font-size:18px;font-weight:700;color:white;margin-bottom:4px}
-.report-header-sub{font-size:12px;color:rgba(255,255,255,.5)}
-.section-title{font-size:13px;font-weight:700;color:var(--gray900);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--blue);padding-bottom:6px;display:inline-block}
-
-/* HIDDEN */
+.upload-zone{border:2px dashed var(--gray300);border-radius:var(--radius);padding:36px 24px;text-align:center;cursor:pointer;transition:.2s;background:#fff}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--blue);background:var(--blue-l)}
+/* ALERT */
+.alert-item{border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:8px;border:1px solid var(--gray200);border-left-width:4px;background:#fff}
+/* REPORT */
+.rep-cover{background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;margin:-18px -18px 18px;padding:24px}
+.rep-cover-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+.rep-cover-sub{font-size:12px;color:rgba(255,255,255,.45)}
+.rep-section{font-size:11px;font-weight:700;color:var(--gray700);text-transform:uppercase;letter-spacing:.6px;margin:16px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--blue)}
+/* PHASES */
+.phase-group{margin-bottom:12px}
+.phase-header{background:var(--gray50);padding:8px 12px;font-size:12px;font-weight:600;color:var(--gray700);border-radius:var(--radius-sm) var(--radius-sm) 0 0;border:1px solid var(--gray200);display:flex;justify-content:space-between;align-items:center}
+.phase-body{border:1px solid var(--gray200);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);overflow:hidden}
+/* PANE */
 .pane{display:none}.pane.on{display:block}
 input[type=file]{display:none}
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:14px}
+.step{background:var(--gray50);border:1px solid var(--gray200);border-radius:var(--radius-sm);padding:11px;display:flex;gap:9px}
+.step-num{width:20px;height:20px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-body p{font-size:11px;font-weight:600;color:var(--gray900);margin-bottom:1px}
+.step-body span{font-size:10px;color:var(--gray400)}
+/* PRINT */
+@media print{
+  .hdr,.tabs,.no-print{display:none!important}
+  .main{padding:0}
+  .rep-cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rep-tbl thead tr{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-logo">
-    <div class="logo-icon">B</div>
-    <div>
-      <div class="header-title">Painel de Faturamento</div>
-      <div class="header-sub">Bravi Software</div>
-    </div>
+<header class="hdr">
+  <div class="hdr-logo">B</div>
+  <div>
+    <div class="hdr-title">Painel de Faturamento</div>
+    <div class="hdr-sub">Bravi Software</div>
   </div>
-  <div class="header-right">
-    <div class="file-badge" id="file-badge" onclick="document.getElementById('fi').click()">
-      📁 Importar arquivo
-    </div>
-    <input type="file" id="fi" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">
-  </div>
+  <button class="file-btn" id="file-badge" onclick="document.getElementById('fi').click()">📁 Importar arquivo</button>
+  <input type="file" id="fi" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">
 </header>
 
-<!-- TABS -->
 <nav class="tabs">
-  <button class="tab-btn on" onclick="sw('upload')">📤 Importar</button>
-  <button class="tab-btn" onclick="sw('conf')">📋 Conferência</button>
-  <button class="tab-btn" onclick="sw('alert')">🔔 Alertas <span class="tab-badge" id="alert-badge" style="display:none"></span></button>
-  <button class="tab-btn" onclick="sw('rel')">📄 Relatório</button>
+  <button class="tab on" onclick="sw('upload')">📤 Importar</button>
+  <button class="tab" onclick="sw('conf')">📋 Conferência</button>
+  <button class="tab" onclick="sw('phases')">🗂️ Phases</button>
+  <button class="tab" onclick="sw('alert')">🔔 Alertas <span class="tbadge" id="alert-badge" style="display:none"></span></button>
+  <button class="tab" onclick="sw('rel')">📄 Relatório</button>
 </nav>
 
 <main class="main">
@@ -167,42 +133,67 @@ input[type=file]{display:none}
     ondragover="event.preventDefault();this.classList.add('drag')"
     ondragleave="this.classList.remove('drag')"
     ondrop="event.preventDefault();this.classList.remove('drag');handleFile(event.dataTransfer.files[0])">
-    <span class="upload-icon">📊</span>
-    <div class="upload-title">Arraste o arquivo XLSX do Timeneye aqui</div>
-    <div class="upload-sub">ou clique para selecionar o arquivo exportado</div>
-    <button class="btn btn-primary" onclick="event.stopPropagation();document.getElementById('fi').click()">
-      📂 Selecionar arquivo .xlsx
-    </button>
+    <div style="font-size:38px;margin-bottom:10px">📊</div>
+    <div style="font-size:15px;font-weight:600;color:var(--gray900);margin-bottom:6px">Arraste o arquivo XLSX do Timeneye aqui</div>
+    <div style="font-size:12px;color:var(--gray400);margin-bottom:16px">ou clique para selecionar</div>
+    <button style="background:var(--blue);color:#fff;padding:9px 22px;border-radius:var(--radius-sm);border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">📂 Selecionar arquivo .xlsx</button>
   </div>
-
-  <div id="preview-dados" style="display:none;margin-top:16px"></div>
-
+  <div id="preview-dados" style="display:none;margin-top:14px"></div>
   <div class="steps">
     <div class="step"><div class="step-num">1</div><div class="step-body"><p>Registro de entradas</p><span>Menu lateral do Timeneye</span></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><p>Filtre o período</p><span>Selecione datas desejadas</span></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><p>Exporte → Excel</p><span>Botão exportar no topo</span></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><p>Arraste aqui</p><span>Dados processados automaticamente</span></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><p>Arraste aqui</p><span>Processado automaticamente</span></div></div>
   </div>
 </div>
 
 <!-- CONFERÊNCIA -->
 <div id="pane-conf" class="pane">
   <div class="filters">
-    <div class="fg"><span class="fl">Cliente</span><select id="c-cli" onchange="cascata('c')"><option value="">Todos</option></select></div>
-    <div class="fg"><span class="fl">Profissional</span><select id="c-prof" onchange="cascata('p')"><option value="">Todos</option></select></div>
+    <div class="fg" style="min-width:130px"><span class="fl">Cliente</span><select id="c-cli" onchange="cascata('c-cli','c-prof')"><option value="">Todos</option></select></div>
+    <div class="fg" style="min-width:160px">
+      <span class="fl">Profissional (Ctrl+clique para múltiplos)</span>
+      <select id="c-prof" multiple onchange="renderConf()"></select>
+    </div>
     <div class="fg"><span class="fl">Início</span><input type="date" id="c-ini" onchange="renderConf()"></div>
     <div class="fg"><span class="fl">Fim</span><input type="date" id="c-fim" onchange="renderConf()"></div>
-    <div class="fg"><span class="fl">Contrato/mês (h)</span><input type="number" id="c-cont" value="160" min="1" onchange="renderConf()" style="width:90px"></div>
+    <div class="fg"><span class="fl">Mês referência</span>
+      <select id="c-mes" onchange="atualizarHorasEstimadas()">
+        <option value="2026-05">Maio 2026</option>
+        <option value="2026-06">Junho 2026</option>
+        <option value="2026-07">Julho 2026</option>
+        <option value="2026-08">Agosto 2026</option>
+      </select>
+    </div>
   </div>
+  <div style="font-size:11px;color:var(--gray400);margin-bottom:10px">💡 Horas estimadas calculadas automaticamente pelos dias úteis do mês (calendário BR). Clique no valor para editar individualmente.</div>
   <div class="stats" id="conf-stats"></div>
   <div class="tbl-wrap"><table id="conf-table"><tbody><tr><td style="padding:24px;text-align:center;color:var(--gray400)">Importe um arquivo XLSX para ver os dados</td></tr></tbody></table></div>
+</div>
+
+<!-- PHASES -->
+<div id="pane-phases" class="pane">
+  <div class="filters">
+    <div class="fg" style="min-width:130px"><span class="fl">Cliente</span><select id="p-cli" onchange="cascata('p-cli','p-prof');renderPhases()"><option value="">Todos</option></select></div>
+    <div class="fg" style="min-width:160px"><span class="fl">Profissional</span><select id="p-prof" onchange="renderPhases()"><option value="">Todos</option></select></div>
+    <div class="fg"><span class="fl">Início</span><input type="date" id="p-ini" onchange="renderPhases()"></div>
+    <div class="fg"><span class="fl">Fim</span><input type="date" id="p-fim" onchange="renderPhases()"></div>
+    <div class="fg" style="min-width:130px"><span class="fl">Agrupar por</span>
+      <select id="p-group" onchange="renderPhases()">
+        <option value="phase">Phase</option>
+        <option value="user">Profissional</option>
+        <option value="client">Cliente</option>
+      </select>
+    </div>
+  </div>
+  <div id="phases-list"><div style="text-align:center;padding:32px;color:var(--gray400)">Importe um arquivo XLSX para ver as phases</div></div>
 </div>
 
 <!-- ALERTAS -->
 <div id="pane-alert" class="pane">
   <div class="filters">
-    <div class="fg"><span class="fl">Cliente</span><select id="a-cli" onchange="renderAlertas()"><option value="">Todos</option></select></div>
-    <div class="fg"><span class="fl">Profissional</span><select id="a-prof" onchange="renderAlertas()"><option value="">Todos</option></select></div>
+    <div class="fg" style="min-width:130px"><span class="fl">Cliente</span><select id="a-cli" onchange="renderAlertas()"><option value="">Todos</option></select></div>
+    <div class="fg" style="min-width:150px"><span class="fl">Profissional</span><select id="a-prof" onchange="renderAlertas()"><option value="">Todos</option></select></div>
   </div>
   <div class="stats" id="alert-stats" style="grid-template-columns:repeat(3,1fr)"></div>
   <div id="alert-list"><div style="text-align:center;padding:32px;color:var(--gray400)">Importe um arquivo XLSX para ver os alertas</div></div>
@@ -210,15 +201,19 @@ input[type=file]{display:none}
 
 <!-- RELATÓRIO -->
 <div id="pane-rel" class="pane">
-  <div class="filters">
-    <div class="fg"><span class="fl">Cliente</span><select id="r-cli" onchange="cascataRel('c')"><option value="">Selecione</option></select></div>
-    <div class="fg"><span class="fl">Profissional</span><select id="r-prof" onchange="cascataRel('p')"><option value="">Todos</option></select></div>
-    <div class="fg"><span class="fl">Início</span><input type="date" id="r-ini"></div>
-    <div class="fg"><span class="fl">Fim</span><input type="date" id="r-fim"></div>
-    <div class="fg"><span class="fl">Tipo</span><select id="r-tipo"><option value="quinzenal">Quinzenal</option><option value="mensal">Mensal</option></select></div>
-    <div class="fg" style="justify-content:flex-end">
-      <span class="fl">&nbsp;</span>
-      <button class="btn btn-primary" onclick="renderRel()">📊 Gerar relatório</button>
+  <div class="card no-print">
+    <div class="filters">
+      <div class="fg" style="min-width:130px"><span class="fl">Cliente</span><select id="r-cli" onchange="cascata('r-cli','r-prof')"><option value="">Selecione</option></select></div>
+      <div class="fg" style="min-width:160px">
+        <span class="fl">Profissional(is) (Ctrl+clique)</span>
+        <select id="r-prof" multiple style="height:100px"></select>
+      </div>
+      <div class="fg"><span class="fl">Início</span><input type="date" id="r-ini"></div>
+      <div class="fg"><span class="fl">Fim</span><input type="date" id="r-fim"></div>
+      <div class="fg"><span class="fl">Tipo</span><select id="r-tipo"><option value="quinzenal">Quinzenal</option><option value="mensal">Mensal</option></select></div>
+      <div class="fg" style="justify-content:flex-end"><span class="fl">&nbsp;</span>
+        <button onclick="renderRel()" style="background:var(--blue);color:#fff;padding:9px 20px;border-radius:var(--radius-sm);border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">📊 Gerar relatório</button>
+      </div>
     </div>
   </div>
   <div id="rel-preview"><div style="text-align:center;padding:40px;color:var(--gray400)">Selecione os filtros e clique em Gerar relatório</div></div>
@@ -227,16 +222,39 @@ input[type=file]{display:none}
 </main>
 
 <script>
-let DADOS = [];
-const HOJE = new Date().toISOString().slice(0,10);
-const fmtMin = m => { m=Math.round(m); return Math.floor(m/60)+'h '+(m%60).toString().padStart(2,'0')+'min'; };
-const fmtD = d => d ? d.slice(8,10)+'/'+d.slice(5,7)+'/'+d.slice(0,4) : '-';
-const nomeProp = u => u.split('.').map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(' ');
-const getDesc = r => [r.nota,r.sourceText,r.todo].find(x=>x&&x.trim()&&x.trim()!=='-')||r.fase||'-';
-const chaveGrupo = desc => !desc||desc==='-'?'Outros':desc.split(/[\-–(]/)[0].trim().split(' ').slice(0,6).join(' ').trim()||desc;
+let DADOS=[], HORAS_CUSTOM={};
+const HOJE=new Date().toISOString().slice(0,10);
+
+// Feriados BR 2026
+const FERIADOS=['2026-01-01','2026-02-16','2026-02-17','2026-04-03','2026-04-21',
+  '2026-05-01','2026-06-04','2026-09-07','2026-10-12','2026-11-02','2026-11-15','2026-12-25'];
+
+function diasUteis(ano, mes) {
+  const d1 = new Date(ano, mes-1, 1);
+  const d2 = new Date(ano, mes, 0);
+  let n=0;
+  for(let d=new Date(d1);d<=d2;d.setDate(d.getDate()+1)){
+    const iso=d.toISOString().slice(0,10);
+    if(d.getDay()>0&&d.getDay()<6&&!FERIADOS.includes(iso)) n++;
+  }
+  return n;
+}
+
+function horasEstimadas(user) {
+  if(HORAS_CUSTOM[user]!==undefined) return HORAS_CUSTOM[user];
+  const mes=document.getElementById('c-mes')?.value||'2026-05';
+  const [ano,m]=mes.split('-').map(Number);
+  return diasUteis(ano,m)*8;
+}
+
+const fmtMin=m=>{m=Math.round(m);return Math.floor(m/60)+'h '+(m%60).toString().padStart(2,'0')+'min'};
+const fmtD=d=>d?d.slice(8,10)+'/'+d.slice(5,7)+'/'+d.slice(0,4):'-';
+const nomeProp=u=>u.split('.').map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(' ');
+const getDesc=r=>[r.nota,r.sourceText,r.todo].find(x=>x&&x.trim()&&x.trim()!=='-')||r.fase||'-';
+const chaveGrupo=desc=>!desc||desc==='-'?'Outros':desc.split(/[\-–(]/)[0].trim().split(' ').slice(0,6).join(' ').trim()||desc;
 
 function sw(id){
-  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
   document.getElementById('pane-'+id).classList.add('on');
   event.currentTarget.classList.add('on');
@@ -254,19 +272,21 @@ function handleFile(file){
         .map(r=>{
           const d=r['Entry date'];
           let ds=typeof d==='string'&&d.includes('-')?d.slice(0,10):d instanceof Date?d.toISOString().slice(0,10):String(d).slice(0,10);
-          return{data:ds,cliente:(r['Client']||'').trim(),projeto:(r['Project']||'').trim(),fase:(r['Phase']||'').trim(),
+          return{data:ds,cliente:(r['Client']||'').trim(),projeto:(r['Project']||'').trim(),
+            fase:(r['Phase']||'').trim(),faseCateg:(r['Phase Category']||'').trim(),
             user:(r['User']||'').trim(),minutos:parseInt(r['Entry time (minutes)'])||0,
-            nota:(r['Note']||'').trim(),sourceText:(r['Source Text']||'').trim(),todo:(r['Todo']||'').trim(),status:(r['Billing status']||'').trim()};
+            nota:(r['Note']||'').trim(),sourceText:(r['Source Text']||'').trim(),
+            todo:(r['Todo']||'').trim(),status:(r['Billing status']||'').trim()};
         }).filter(r=>r.data&&r.data.match(/^\d{4}-\d{2}/)&&r.minutos>0);
 
+      HORAS_CUSTOM={};
       const b=document.getElementById('file-badge');
       b.textContent='✓ '+file.name+' — '+DADOS.length+' registros';
-      b.className='file-badge loaded';
+      b.className='file-btn loaded';
       popularFiltros();
       mostrarPreview(file.name);
-      renderConf();
-      renderAlertas();
-    }catch(e){alert('Erro ao ler arquivo: '+e.message);}
+      renderConf();renderAlertas();renderPhases();
+    }catch(e){alert('Erro: '+e.message);}
   };
   reader.readAsArrayBuffer(file);
 }
@@ -275,129 +295,211 @@ function popularFiltros(){
   const cli=[...new Set(DADOS.map(d=>d.cliente))].filter(Boolean).sort();
   const usr=[...new Set(DADOS.map(d=>d.user))].filter(Boolean).sort();
   const dts=DADOS.map(d=>d.data).filter(Boolean).sort();
-  ['c-cli','r-cli','a-cli'].forEach(id=>{
-    const s=document.getElementById(id),def=id==='r-cli'?'<option value="">Selecione</option>':'<option value="">Todos</option>';
-    s.innerHTML=def;cli.forEach(c=>{const o=document.createElement('option');o.value=c;o.text=c;s.appendChild(o);});});
-  ['c-prof','r-prof','a-prof'].forEach(id=>{
-    const s=document.getElementById(id);s.innerHTML='<option value="">Todos</option>';
-    usr.forEach(u=>{const o=document.createElement('option');o.value=u;o.text=nomeProp(u);s.appendChild(o);});});
+  ['c-cli','r-cli','a-cli','p-cli'].forEach(id=>{
+    const s=document.getElementById(id);
+    const def=id==='r-cli'?'<option value="">Selecione</option>':'<option value="">Todos</option>';
+    s.innerHTML=def;cli.forEach(c=>{const o=document.createElement('option');o.value=c;o.text=c;s.appendChild(o);});
+  });
+  ['c-prof','r-prof','a-prof','p-prof'].forEach(id=>{
+    const s=document.getElementById(id);
+    const isMulti=s.multiple;
+    s.innerHTML=isMulti?'':'<option value="">Todos</option>';
+    usr.forEach(u=>{const o=document.createElement('option');o.value=u;o.text=nomeProp(u);s.appendChild(o);});
+  });
   const ini=dts[0]||'',fim=dts[dts.length-1]||'';
-  ['c-ini','r-ini'].forEach(id=>document.getElementById(id).value=ini);
-  ['c-fim','r-fim'].forEach(id=>document.getElementById(id).value=fim);
+  ['c-ini','r-ini','p-ini'].forEach(id=>document.getElementById(id).value=ini);
+  ['c-fim','r-fim','p-fim'].forEach(id=>document.getElementById(id).value=fim);
 }
 
-function cascata(origem){
-  const cli=document.getElementById('c-cli').value,prof=document.getElementById('c-prof').value;
-  if(origem==='c'){
-    const usrs=[...new Set(DADOS.filter(d=>!cli||d.cliente===cli).map(d=>d.user))].filter(Boolean).sort();
-    const s=document.getElementById('c-prof'),cur=s.value;
-    s.innerHTML='<option value="">Todos</option>';usrs.forEach(u=>{const o=document.createElement('option');o.value=u;o.text=nomeProp(u);s.appendChild(o);});
-    if(usrs.includes(cur))s.value=cur;
-  }else{
-    const clis=[...new Set(DADOS.filter(d=>!prof||d.user===prof).map(d=>d.cliente))].filter(Boolean).sort();
-    const s=document.getElementById('c-cli'),cur=s.value;
-    s.innerHTML='<option value="">Todos</option>';clis.forEach(c=>{const o=document.createElement('option');o.value=c;o.text=c;s.appendChild(o);});
-    if(clis.includes(cur))s.value=cur;
+function cascata(cliId, profId){
+  const cli=document.getElementById(cliId).value;
+  const usrs=[...new Set(DADOS.filter(d=>!cli||d.cliente===cli).map(d=>d.user))].filter(Boolean).sort();
+  const s=document.getElementById(profId);
+  const isMulti=s.multiple;
+  s.innerHTML=isMulti?'':'<option value="">Todos</option>';
+  usrs.forEach(u=>{const o=document.createElement('option');o.value=u;o.text=nomeProp(u);s.appendChild(o);});
+  if(profId==='c-prof') renderConf();
+  else if(profId==='r-prof') {}
+  else if(profId==='p-prof') renderPhases();
+}
+
+function atualizarHorasEstimadas(){ HORAS_CUSTOM={}; renderConf(); }
+
+function getSelectedProfs(selectId){
+  const s=document.getElementById(selectId);
+  if(s.multiple){
+    const sel=[...s.selectedOptions].map(o=>o.value).filter(Boolean);
+    return sel.length>0?sel:null;
   }
-  renderConf();
+  return s.value?[s.value]:null;
 }
 
-function cascataRel(origem){
-  const cli=document.getElementById('r-cli').value,prof=document.getElementById('r-prof').value;
-  if(origem==='c'){
-    const usrs=[...new Set(DADOS.filter(d=>!cli||d.cliente===cli).map(d=>d.user))].filter(Boolean).sort();
-    const s=document.getElementById('r-prof'),cur=s.value;
-    s.innerHTML='<option value="">Todos</option>';usrs.forEach(u=>{const o=document.createElement('option');o.value=u;o.text=nomeProp(u);s.appendChild(o);});
-    if(usrs.includes(cur))s.value=cur;
-  }else{
-    const clis=[...new Set(DADOS.filter(d=>!prof||d.user===prof).map(d=>d.cliente))].filter(Boolean).sort();
-    const s=document.getElementById('r-cli'),cur=s.value;
-    s.innerHTML='<option value="">Selecione</option>';clis.forEach(c=>{const o=document.createElement('option');o.value=c;o.text=c;s.appendChild(o);});
-    if(clis.includes(cur))s.value=cur;
-  }
-}
-
-function filtrar(cli,prof,ini,fim){
-  return DADOS.filter(d=>(!cli||d.cliente===cli)&&(!prof||d.user===prof)&&(!ini||d.data>=ini)&&(!fim||d.data<=fim));
+function filtrar(cli, profs, ini, fim){
+  return DADOS.filter(d=>
+    (!cli||d.cliente===cli)&&
+    (!profs||profs.includes(d.user))&&
+    (!ini||d.data>=ini)&&
+    (!fim||d.data<=fim)
+  );
 }
 
 function mostrarPreview(nome){
   const tot=DADOS.reduce((a,d)=>a+d.minutos,0);
-  const cli=[...new Set(DADOS.map(d=>d.cliente))],usr=[...new Set(DADOS.map(d=>d.user))];
+  const cli=[...new Set(DADOS.map(d=>d.cliente))];
+  const usr=[...new Set(DADOS.map(d=>d.user))];
   document.getElementById('preview-dados').style.display='block';
   document.getElementById('preview-dados').innerHTML=`
-    <div style="background:#D1FAE5;border:1px solid #6EE7B7;border-radius:8px;padding:12px 16px;margin-bottom:14px;color:#065F46;font-weight:500;font-size:13px">
-      ✅ Arquivo carregado com sucesso! ${DADOS.length} registros importados.
+    <div style="background:#D1FAE5;border:1px solid #6EE7B7;border-radius:8px;padding:11px 14px;margin-bottom:12px;color:#065F46;font-weight:500;font-size:12px">
+      ✅ ${DADOS.length} registros importados com sucesso
     </div>
     <div class="stats">
       <div class="stat"><div class="stat-val">${DADOS.length}</div><div class="stat-lbl">Registros</div></div>
-      <div class="stat"><div class="stat-val">${fmtMin(tot)}</div><div class="stat-lbl">Total de horas</div></div>
+      <div class="stat"><div class="stat-val">${fmtMin(tot)}</div><div class="stat-lbl">Total horas</div></div>
       <div class="stat"><div class="stat-val">${cli.length}</div><div class="stat-lbl">Clientes</div></div>
       <div class="stat"><div class="stat-val">${usr.length}</div><div class="stat-lbl">Profissionais</div></div>
     </div>
     <div style="display:flex;gap:8px">
-      <button class="btn btn-info" onclick="document.querySelectorAll('.tab-btn')[1].click()">📋 Ver conferência</button>
-      <button class="btn btn-secondary" onclick="document.querySelectorAll('.tab-btn')[2].click()">🔔 Ver alertas</button>
-      <button class="btn btn-secondary" onclick="document.querySelectorAll('.tab-btn')[3].click()">📄 Gerar relatório</button>
+      <button onclick="document.querySelectorAll('.tab')[1].click()" style="background:var(--blue-l);color:var(--blue);padding:7px 14px;border-radius:var(--radius-sm);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">📋 Conferência</button>
+      <button onclick="document.querySelectorAll('.tab')[2].click()" style="background:var(--gray100);color:var(--gray700);padding:7px 14px;border-radius:var(--radius-sm);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">🗂️ Phases</button>
+      <button onclick="document.querySelectorAll('.tab')[4].click()" style="background:var(--gray100);color:var(--gray700);padding:7px 14px;border-radius:var(--radius-sm);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">📄 Relatório</button>
     </div>`;
 }
 
 function renderConf(){
   if(!DADOS.length)return;
-  const cli=document.getElementById('c-cli').value,prof=document.getElementById('c-prof').value;
+  const cli=document.getElementById('c-cli').value;
+  const profsSel=getSelectedProfs('c-prof');
   const ini=document.getElementById('c-ini').value,fim=document.getElementById('c-fim').value;
-  const cont=(parseInt(document.getElementById('c-cont').value)||160)*60;
-  const dados=filtrar(cli,prof,ini,fim);
-  const users=prof?[prof]:[...new Set(dados.map(d=>d.user))].filter(Boolean).sort();
+  const dados=filtrar(cli,profsSel,ini,fim);
+  const users=profsSel||[...new Set(dados.map(d=>d.user))].filter(Boolean).sort();
+
   const rows=users.map(u=>{
     const ld=dados.filter(d=>d.user===u);
-    const tot=ld.reduce((a,d)=>a+d.minutos,0),pct=Math.round((tot/cont)*100);
+    const totMin=ld.reduce((a,d)=>a+d.minutos,0);
+    const hEst=horasEstimadas(u);
+    const hEstMin=hEst*60;
+    const pct=Math.round((totMin/hEstMin)*100);
     const dts=[...new Set(ld.map(d=>d.data))].sort();
     const hojeMin=ld.filter(d=>d.data===HOJE).reduce((a,d)=>a+d.minutos,0);
-    return{u,nome:nomeProp(u),clientes:[...new Set(ld.map(d=>d.cliente))].join(', '),tot,pct,ultima:dts[dts.length-1]||'-',hojeMin,dias:dts.length};
+    const clientes=[...new Set(ld.map(d=>d.cliente))].join(', ');
+    return{u,nome:nomeProp(u),clientes,totMin,hEst,hEstMin,pct,ultima:dts[dts.length-1]||'-',hojeMin,dias:dts.length};
   });
-  const totMin=rows.reduce((a,r)=>a+r.tot,0);
+
+  const totMin=rows.reduce((a,r)=>a+r.totMin,0);
+  const totEst=rows.reduce((a,r)=>a+r.hEstMin,0);
   document.getElementById('conf-stats').innerHTML=`
     <div class="stat"><div class="stat-val">${fmtMin(totMin)}</div><div class="stat-lbl">Total lançado</div></div>
+    <div class="stat"><div class="stat-val">${fmtMin(totEst)}</div><div class="stat-lbl">Total estimado</div></div>
     <div class="stat"><div class="stat-val">${rows.length}</div><div class="stat-lbl">Profissionais</div></div>
-    <div class="stat"><div class="stat-val">${dados.length}</div><div class="stat-lbl">Registros</div></div>
-    <div class="stat"><div class="stat-val">${[...new Set(dados.map(d=>d.data))].length}</div><div class="stat-lbl">Dias ativos</div></div>`;
+    <div class="stat"><div class="stat-val">${dados.length}</div><div class="stat-lbl">Registros</div></div>`;
+
   document.getElementById('conf-table').innerHTML=`
-    <thead><tr><th>Profissional</th><th>Cliente(s)</th><th>Última entrada</th><th>Lançado</th><th style="min-width:140px">Progresso/contrato</th><th>Dias</th><th>Hoje</th></tr></thead>
+    <thead><tr>
+      <th>Profissional</th><th>Cliente(s)</th><th>Última entrada</th>
+      <th>Estimado/mês ✏️</th><th>Lançado</th><th style="min-width:130px">Progresso</th><th>Dias</th><th>Hoje</th>
+    </tr></thead>
     <tbody>${rows.map(r=>{
       const cor=r.pct>100?'var(--red)':r.pct>90?'var(--yellow)':'var(--green)';
+      const edited=HORAS_CUSTOM[r.u]!==undefined;
       return`<tr>
         <td style="font-weight:600">${r.nome}</td>
-        <td style="font-size:12px">${r.clientes.split(', ').map(c=>`<span class="badge b-info" style="margin-right:2px;margin-bottom:2px">${c}</span>`).join('')}</td>
-        <td style="color:var(--gray400);white-space:nowrap;font-family:'DM Mono',monospace;font-size:12px">${fmtD(r.ultima)}</td>
-        <td style="font-weight:600;font-family:'DM Mono',monospace">${fmtMin(r.tot)}</td>
-        <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${Math.min(r.pct,100)}%;background:${cor}"></div></div><span class="prog-lbl" style="color:${cor}">${r.pct}%</span></div></td>
+        <td style="font-size:11px">${r.clientes.split(', ').map(c=>`<span class="badge b-info" style="margin-right:2px">${c}</span>`).join('')}</td>
+        <td style="color:var(--gray400);white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px">${fmtD(r.ultima)}</td>
+        <td><input type="number" class="hrs-input ${edited?'edited':''}" value="${r.hEst}" min="1" max="300"
+          title="Edite as horas estimadas para ${r.nome}"
+          onchange="HORAS_CUSTOM['${r.u}']=parseFloat(this.value)||160;this.classList.add('edited');renderConf()"></td>
+        <td style="font-weight:600;font-family:'DM Mono',monospace">${fmtMin(r.totMin)}</td>
+        <td><div class="prog-wrap">
+          <div class="prog-bar"><div class="prog-fill" style="width:${Math.min(r.pct,100)}%;background:${cor}"></div></div>
+          <span style="font-size:11px;min-width:34px;color:${cor};font-weight:600;font-family:'DM Mono',monospace">${r.pct}%</span>
+        </div></td>
         <td style="color:var(--gray400)">${r.dias}</td>
         <td>${r.hojeMin>0?`<span class="badge b-ok">${fmtMin(r.hojeMin)}</span>`:'<span class="badge b-muted">—</span>'}</td>
       </tr>`;
     }).join('')}</tbody>`;
 }
 
+function renderPhases(){
+  if(!DADOS.length)return;
+  const cli=document.getElementById('p-cli').value;
+  const prof=document.getElementById('p-prof').value;
+  const ini=document.getElementById('p-ini').value,fim=document.getElementById('p-fim').value;
+  const group=document.getElementById('p-group').value;
+  const dados=filtrar(cli,prof?[prof]:null,ini,fim);
+
+  const grupos={};
+  dados.forEach(d=>{
+    let k;
+    if(group==='phase') k=d.fase||'Sem phase';
+    else if(group==='user') k=nomeProp(d.user)||'Sem profissional';
+    else k=d.cliente||'Sem cliente';
+    if(!grupos[k]) grupos[k]={total:0,itens:[]};
+    grupos[k].total+=d.minutos;
+    const subKey=group==='phase'?nomeProp(d.user):d.fase||'Sem phase';
+    const existing=grupos[k].itens.find(i=>i.key===subKey);
+    if(existing) existing.min+=d.minutos;
+    else grupos[k].itens.push({key:subKey,min:d.minutos});
+  });
+
+  const totalGeral=dados.reduce((a,d)=>a+d.minutos,0);
+  const sorted=Object.entries(grupos).sort((a,b)=>b[1].total-a[1].total);
+
+  let html=`<div style="margin-bottom:12px;font-size:12px;color:var(--gray400)">
+    Total: <strong style="color:var(--gray900)">${fmtMin(totalGeral)}</strong> em <strong style="color:var(--gray900)">${sorted.length}</strong> ${group==='phase'?'phases':group==='user'?'profissionais':'clientes'}
+  </div>`;
+
+  sorted.forEach(([key,val])=>{
+    const pct=Math.round((val.total/totalGeral)*100);
+    const subSorted=val.itens.sort((a,b)=>b.min-a.min);
+    html+=`<div class="phase-group">
+      <div class="phase-header">
+        <span>${key}</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:80px;height:5px;background:var(--gray200);border-radius:3px;overflow:hidden;display:inline-block">
+            <div style="width:${pct}%;height:100%;background:var(--blue);border-radius:3px"></div>
+          </div>
+          <span style="font-family:'DM Mono',monospace;color:var(--blue)">${fmtMin(val.total)}</span>
+          <span class="badge b-muted">${pct}%</span>
+        </div>
+      </div>
+      <div class="phase-body">
+        <table style="width:100%;border-collapse:collapse;font-size:11px">
+          ${subSorted.map((item,i)=>`
+            <tr style="border-bottom:${i<subSorted.length-1?'1px solid var(--gray100)':'none'}">
+              <td style="padding:7px 12px;color:var(--gray600)">${item.key}</td>
+              <td style="padding:7px 12px;text-align:right;font-family:'DM Mono',monospace;color:var(--gray700);font-weight:500">${fmtMin(item.min)}</td>
+              <td style="padding:7px 12px;text-align:right;color:var(--gray400);width:50px">${Math.round((item.min/val.total)*100)}%</td>
+            </tr>`).join('')}
+        </table>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('phases-list').innerHTML=html||'<div style="text-align:center;padding:24px;color:var(--gray400)">Nenhum dado encontrado para os filtros selecionados</div>';
+}
+
 function renderAlertas(){
   if(!DADOS.length)return;
-  const cli=document.getElementById('a-cli').value,prof=document.getElementById('a-prof').value;
-  const cont=(parseInt(document.getElementById('c-cont')?.value)||160)*60;
+  const cli=document.getElementById('a-cli').value;
+  const prof=document.getElementById('a-prof').value;
   const users=prof?[prof]:[...new Set(DADOS.filter(d=>!cli||d.cliente===cli).map(d=>d.user))].filter(Boolean);
   const lista=[];
   users.forEach(u=>{
     const ld=DADOS.filter(d=>d.user===u&&(!cli||d.cliente===cli));
     const nome=nomeProp(u),cliente=[...new Set(ld.map(d=>d.cliente))].join(', ');
-    const tot=ld.reduce((a,d)=>a+d.minutos,0),pct=tot/cont;
+    const tot=ld.reduce((a,d)=>a+d.minutos,0);
+    const hEstMin=horasEstimadas(u)*60;
+    const pct=tot/hEstMin;
     const hojeMin=ld.filter(d=>d.data===HOJE).reduce((a,d)=>a+d.minutos,0);
-    if(hojeMin===0)lista.push({tipo:'danger',titulo:`${nome} — sem lançamento hoje`,desc:`Nenhuma hora registrada em ${fmtD(HOJE)}.`,cliente});
-    if(pct>=0.9&&pct<1)lista.push({tipo:'warn',titulo:`${nome} — ${Math.round(pct*100)}% do contrato`,desc:`${fmtMin(tot)} lançados. Comunicar cliente sobre horas adicionais.`,cliente});
-    if(pct>1)lista.push({tipo:'danger',titulo:`${nome} — acima do contrato (${Math.round(pct*100)}%)`,desc:`${fmtMin(tot)} lançados. Solicitar aprovação de horas extras.`,cliente});
+    if(hojeMin===0) lista.push({tipo:'danger',titulo:`${nome} — sem lançamento hoje`,desc:`Nenhuma hora em ${fmtD(HOJE)}.`,cliente});
+    if(pct>=0.9&&pct<1) lista.push({tipo:'warn',titulo:`${nome} — ${Math.round(pct*100)}% do estimado`,desc:`${fmtMin(tot)} lançados de ${fmtMin(hEstMin)} estimados.`,cliente});
+    if(pct>1) lista.push({tipo:'danger',titulo:`${nome} — acima do estimado (${Math.round(pct*100)}%)`,desc:`${fmtMin(tot)} lançados. Verificar aprovação de horas extras.`,cliente});
     const dts=[...new Set(ld.map(d=>d.data))].sort();
-    if(dts.length){const diff=Math.floor((new Date(HOJE)-new Date(dts[dts.length-1]))/(1000*60*60*24));if(diff>=2)lista.push({tipo:'warn',titulo:`${nome} — ${diff} dias sem lançamento`,desc:`Último registro: ${fmtD(dts[dts.length-1])}.`,cliente});}
+    if(dts.length){const diff=Math.floor((new Date(HOJE)-new Date(dts[dts.length-1]))/(864e5));if(diff>=2)lista.push({tipo:'warn',titulo:`${nome} — ${diff} dias sem lançamento`,desc:`Último: ${fmtD(dts[dts.length-1])}.`,cliente});}
     for(let i=0;i<dts.length-1;i++){
       const h1=ld.filter(d=>d.data===dts[i]).reduce((a,d)=>a+d.minutos,0);
       const h2=ld.filter(d=>d.data===dts[i+1]).reduce((a,d)=>a+d.minutos,0);
-      if((h1+h2)<480&&(h1+h2)>0){lista.push({tipo:'warn',titulo:`${nome} — baixo lançamento em 2 dias`,desc:`${fmtD(dts[i])} e ${fmtD(dts[i+1])}: total ${fmtMin(h1+h2)} (esperado 16h).`,cliente});break;}
+      if((h1+h2)<480&&(h1+h2)>0){lista.push({tipo:'warn',titulo:`${nome} — baixo lançamento em 2 dias`,desc:`${fmtD(dts[i])} e ${fmtD(dts[i+1])}: ${fmtMin(h1+h2)} (esperado 16h).`,cliente});break;}
     }
   });
   const nd=lista.filter(a=>a.tipo==='danger').length,nw=lista.filter(a=>a.tipo==='warn').length,tot=nd+nw;
@@ -406,68 +508,99 @@ function renderAlertas(){
   document.getElementById('alert-stats').innerHTML=`
     <div class="stat"><div class="stat-val" style="color:${nd>0?'var(--red)':'var(--green)'}">${nd}</div><div class="stat-lbl">Críticos</div></div>
     <div class="stat"><div class="stat-val" style="color:${nw>0?'var(--yellow)':'var(--green)'}">${nw}</div><div class="stat-lbl">Atenção</div></div>
-    <div class="stat"><div class="stat-val">${lista.length}</div><div class="stat-lbl">Total</div></div>`;
+    <div class="stat"><div class="stat-val">${tot}</div><div class="stat-lbl">Total</div></div>`;
   document.getElementById('alert-list').innerHTML=lista.length===0
-    ?'<div style="text-align:center;padding:40px;color:var(--green);font-weight:600;font-size:15px">✅ Nenhum alerta encontrado</div>'
+    ?'<div style="text-align:center;padding:40px;color:var(--green);font-size:14px;font-weight:600">✅ Nenhum alerta encontrado</div>'
     :lista.map(a=>`<div class="alert-item" style="border-left-color:${a.tipo==='danger'?'var(--red)':'var(--yellow)'}">
       <div style="display:flex;gap:10px;align-items:flex-start">
-        <span style="font-size:18px">${a.tipo==='danger'?'🔴':'⚠️'}</span>
-        <div style="flex:1"><div style="font-weight:600;font-size:13px;color:var(--gray900)">${a.titulo}</div><div style="font-size:12px;color:var(--gray600);margin-top:2px">${a.desc}</div></div>
-        <span class="badge b-info" style="white-space:nowrap;flex-shrink:0">${a.cliente}</span>
+        <span style="font-size:16px">${a.tipo==='danger'?'🔴':'⚠️'}</span>
+        <div style="flex:1"><div style="font-weight:600;font-size:12px">${a.titulo}</div><div style="font-size:11px;color:var(--gray600);margin-top:2px">${a.desc}</div></div>
+        <span class="badge b-info" style="flex-shrink:0">${a.cliente}</span>
       </div></div>`).join('');
 }
 
 function renderRel(){
   if(!DADOS.length){alert('Importe um arquivo primeiro.');return;}
-  const cli=document.getElementById('r-cli').value,prof=document.getElementById('r-prof').value;
+  const cli=document.getElementById('r-cli').value;
+  const profsSel=getSelectedProfs('r-prof');
   const ini=document.getElementById('r-ini').value,fim=document.getElementById('r-fim').value;
   const tipo=document.getElementById('r-tipo').value;
-  const dados=filtrar(cli,prof,ini,fim);
-  if(!dados.length){document.getElementById('rel-preview').innerHTML='<div style="text-align:center;padding:32px;color:var(--gray400)">Nenhum lançamento encontrado para os filtros selecionados</div>';return;}
-  const tot=dados.reduce((a,d)=>a+d.minutos,0);
-  const cont=(parseInt(document.getElementById('c-cont')?.value)||160)*60;
-  const pct=Math.round((tot/cont)*100);
-  const nomeP=prof?nomeProp(prof):'Todos os profissionais';
+  if(!cli&&!profsSel){alert('Selecione pelo menos um cliente ou profissional.');return;}
+  const dados=filtrar(cli,profsSel,ini,fim);
+  if(!dados.length){document.getElementById('rel-preview').innerHTML='<div style="text-align:center;padding:32px;color:var(--gray400)">Nenhum lançamento encontrado</div>';return;}
+
+  const users=profsSel||[...new Set(dados.map(d=>d.user))].filter(Boolean).sort();
+  const totGeral=dados.reduce((a,d)=>a+d.minutos,0);
   const mesStr=ini?new Date(ini+'T12:00:00').toLocaleDateString('pt-BR',{month:'long',year:'numeric'}):'';
-  const grupos={};dados.forEach(d=>{const k=chaveGrupo(getDesc(d));grupos[k]=(grupos[k]||0)+d.minutos;});
-  const lancMap={};dados.forEach(d=>{const k=d.data+'||'+getDesc(d);if(!lancMap[k])lancMap[k]={data:d.data,desc:getDesc(d),min:0};lancMap[k].min+=d.minutos;});
-  const lancs=Object.values(lancMap).sort((a,b)=>a.data.localeCompare(b.data));
-  const cor=pct>100?'var(--red)':pct>90?'var(--yellow)':'var(--green)';
-  document.getElementById('rel-preview').innerHTML=`<div class="card">
-    <div class="report-header">
-      <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px">Bravi Software — Relatório de Atividades e Horas</div>
-      <div class="report-header-title">Profissional ${nomeP} — ${tipo==='quinzenal'?'Parcial ':''}${mesStr}</div>
-      <div class="report-header-sub">${fmtD(ini)} a ${fmtD(fim)}${cli?' · '+cli:''}</div>
-    </div>
-    <div class="stats">
-      <div class="stat"><div class="stat-val">${fmtMin(tot)}</div><div class="stat-lbl">Total lançado</div></div>
-      <div class="stat"><div class="stat-val">${fmtMin(cont)}</div><div class="stat-lbl">Contrato/mês</div></div>
-      <div class="stat"><div class="stat-val" style="color:${cor}">${pct}%</div><div class="stat-lbl">Utilização</div></div>
-      <div class="stat"><div class="stat-val">${dados.length}</div><div class="stat-lbl">Registros</div></div>
-    </div>
-    <div class="section-title">Relatório das atividades</div>
-    <div class="tbl-wrap" style="margin-bottom:20px"><table>
-      <thead><tr><th>Atividades</th><th style="text-align:right">Horas totais</th></tr></thead>
-      <tbody>${Object.entries(grupos).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>`
-        <tr><td style="background:${i%2?'var(--gray50)':'white'}">${k}</td>
-        <td style="text-align:right;font-weight:600;font-family:'DM Mono',monospace;background:${i%2?'var(--gray50)':'white'}">${fmtMin(v)}</td></tr>`).join('')}
-        <tr style="background:var(--navy)"><td style="color:white;font-weight:700;text-align:right">TOTAL GERAL DO PERÍODO</td>
-        <td style="color:white;font-weight:700;text-align:right;font-family:'DM Mono',monospace">${fmtMin(tot)}</td></tr>
-      </tbody></table></div>
-    <div class="section-title">Atividades diárias — lançamentos</div>
-    <div class="tbl-wrap" style="margin-bottom:20px"><table>
-      <thead><tr><th>Data</th><th>Descrição detalhada da atividade realizada</th><th style="text-align:right">Horas</th></tr></thead>
-      <tbody>${lancs.map((l,i)=>`
-        <tr><td style="white-space:nowrap;font-family:'DM Mono',monospace;font-size:12px;background:${i%2?'var(--gray50)':'white'}">${fmtD(l.data)}</td>
-        <td style="background:${i%2?'var(--gray50)':'white'}">${l.desc}</td>
-        <td style="text-align:right;font-weight:600;font-family:'DM Mono',monospace;background:${i%2?'var(--gray50)':'white'}">${fmtMin(l.min)}</td></tr>`).join('')}
-        <tr style="background:var(--navy)"><td colspan="2" style="color:white;font-weight:700;text-align:right">TOTAL</td>
-        <td style="color:white;font-weight:700;text-align:right;font-family:'DM Mono',monospace">${fmtMin(tot)}</td></tr>
-      </tbody></table></div>
-    <div style="display:flex;gap:10px;padding-top:14px;border-top:1px solid var(--gray200)">
-      <button class="btn btn-info" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
-    </div>
-  </div>`;
+  const nomesProfs=users.map(nomeProp).join(', ');
+
+  // Agrupamento por profissional → por atividade real
+  let secoes='';
+  users.forEach(u=>{
+    const ud=dados.filter(d=>d.user===u);
+    if(!ud.length) return;
+    const uTot=ud.reduce((a,d)=>a+d.minutos,0);
+    const grupos={};
+    ud.forEach(d=>{const k=chaveGrupo(getDesc(d));grupos[k]=(grupos[k]||0)+d.minutos;});
+    const lancMap={};
+    ud.forEach(d=>{const k=d.data+'||'+getDesc(d);if(!lancMap[k])lancMap[k]={data:d.data,desc:getDesc(d),min:0};lancMap[k].min+=d.minutos;});
+    const lancs=Object.values(lancMap).sort((a,b)=>a.data.localeCompare(b.data));
+
+    secoes+=`
+      ${users.length>1?`<div style="background:var(--navy2);padding:10px 18px;margin:20px -18px 14px;color:#fff;font-weight:600;font-size:13px">👤 ${nomeProp(u)} <span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.5);margin-left:8px">${fmtMin(uTot)}</span></div>`:''}
+      <div class="rep-section">Relatório das atividades</div>
+      <div style="margin-bottom:14px">
+        <table class="rep-tbl" style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr style="background:var(--navy)"><th style="padding:8px 11px;text-align:left;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.4px">Atividades</th><th style="padding:8px 11px;text-align:right;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap">Horas Totais</th></tr></thead>
+          <tbody>${Object.entries(grupos).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>`
+            <tr><td style="padding:8px 11px;background:${i%2?'var(--gray50)':'#fff'}">${k}</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600;font-family:'DM Mono',monospace;background:${i%2?'var(--gray50)':'#fff'}">${fmtMin(v)}</td></tr>`).join('')}
+            <tr style="background:var(--navy)"><td style="padding:8px 11px;color:#fff;font-weight:700;text-align:right">TOTAL GERAL DO PERÍODO</td>
+            <td style="padding:8px 11px;color:#fff;font-weight:700;text-align:right;font-family:'DM Mono',monospace">${fmtMin(uTot)}</td></tr>
+          </tbody></table>
+      </div>
+      <div class="rep-section">Atividades diárias — lançamentos</div>
+      <div style="margin-bottom:16px">
+        <table class="rep-tbl" style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr style="background:var(--navy)"><th style="padding:8px 11px;text-align:left;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.4px">Data</th><th style="padding:8px 11px;text-align:left;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.4px">Descrição detalhada da atividade realizada</th><th style="padding:8px 11px;text-align:right;color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.4px">Horas</th></tr></thead>
+          <tbody>${lancs.map((l,i)=>`
+            <tr><td style="padding:7px 11px;white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px;background:${i%2?'var(--gray50)':'#fff'}">${fmtD(l.data)}</td>
+            <td style="padding:7px 11px;background:${i%2?'var(--gray50)':'#fff'}">${l.desc}</td>
+            <td style="padding:7px 11px;text-align:right;font-weight:600;font-family:'DM Mono',monospace;background:${i%2?'var(--gray50)':'#fff'}">${fmtMin(l.min)}</td></tr>`).join('')}
+            <tr style="background:var(--navy)"><td colspan="2" style="padding:8px 11px;color:#fff;font-weight:700;text-align:right">TOTAL</td>
+            <td style="padding:8px 11px;color:#fff;font-weight:700;text-align:right;font-family:'DM Mono',monospace">${fmtMin(uTot)}</td></tr>
+          </tbody></table>
+      </div>`;
+  });
+
+  document.getElementById('rel-preview').innerHTML=`
+    <div class="card" id="rel-content">
+      <div class="rep-cover">
+        <div style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Bravi Software</div>
+        <div class="rep-cover-title">Relatório de Atividades e Horas</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.7);margin-top:4px">
+          ${users.length===1?'Profissional '+nomeProp(users[0]):users.length+' profissionais'} — ${tipo==='quinzenal'?'Parcial ':''}${mesStr}
+        </div>
+        <div class="rep-cover-sub" style="margin-top:10px">${fmtD(ini)} a ${fmtD(fim)}${cli?' · '+cli:''}</div>
+      </div>
+
+      <div class="stats" style="margin-bottom:20px">
+        <div class="stat"><div class="stat-val">${fmtMin(totGeral)}</div><div class="stat-lbl">Total lançado</div></div>
+        <div class="stat"><div class="stat-val">${users.length}</div><div class="stat-lbl">Profissional(is)</div></div>
+        <div class="stat"><div class="stat-val">${dados.length}</div><div class="stat-lbl">Registros</div></div>
+        <div class="stat"><div class="stat-val">${[...new Set(dados.map(d=>d.data))].length}</div><div class="stat-lbl">Dias ativos</div></div>
+      </div>
+
+      ${secoes}
+
+      <div style="border-top:1px solid var(--gray200);padding-top:14px;display:flex;gap:10px;margin-top:4px" class="no-print">
+        <button onclick="window.print()" style="background:var(--blue);color:#fff;padding:9px 20px;border-radius:var(--radius-sm);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">🖨️ Imprimir / Salvar PDF</button>
+      </div>
+
+      <div style="border-top:1px solid var(--gray200);padding-top:10px;margin-top:10px;text-align:center">
+        <span style="font-size:11px;color:var(--gray400)">Bravi Solutions · www.bravi.com.br · hello@bravi.com.br</span>
+      </div>
+    </div>`;
 }
 </script>
 </body>
