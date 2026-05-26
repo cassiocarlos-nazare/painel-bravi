@@ -105,7 +105,7 @@ input[type=file]{display:none}
 </style>
 </head>
 <body>
-
+ 
 <header class="hdr">
   <div class="hdr-logo">B</div>
   <div>
@@ -115,7 +115,7 @@ input[type=file]{display:none}
   <button class="file-btn" id="file-badge" onclick="document.getElementById('fi').click()">📁 Importar arquivo</button>
   <input type="file" id="fi" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">
 </header>
-
+ 
 <nav class="tabs">
   <button class="tab on" onclick="sw('upload')">📤 Importar</button>
   <button class="tab" onclick="sw('conf')">📋 Conferência</button>
@@ -123,9 +123,9 @@ input[type=file]{display:none}
   <button class="tab" onclick="sw('alert')">🔔 Alertas <span class="tbadge" id="alert-badge" style="display:none"></span></button>
   <button class="tab" onclick="sw('rel')">📄 Relatório</button>
 </nav>
-
+ 
 <main class="main">
-
+ 
 <!-- IMPORTAR -->
 <div id="pane-upload" class="pane on">
   <div class="upload-zone" id="drop-zone"
@@ -146,7 +146,7 @@ input[type=file]{display:none}
     <div class="step"><div class="step-num">4</div><div class="step-body"><p>Arraste aqui</p><span>Processado automaticamente</span></div></div>
   </div>
 </div>
-
+ 
 <!-- CONFERÊNCIA -->
 <div id="pane-conf" class="pane">
   <div class="filters">
@@ -170,7 +170,7 @@ input[type=file]{display:none}
   <div class="stats" id="conf-stats"></div>
   <div class="tbl-wrap"><table id="conf-table"><tbody><tr><td style="padding:24px;text-align:center;color:var(--gray400)">Importe um arquivo XLSX para ver os dados</td></tr></tbody></table></div>
 </div>
-
+ 
 <!-- PHASES -->
 <div id="pane-phases" class="pane">
   <div class="filters">
@@ -188,7 +188,7 @@ input[type=file]{display:none}
   </div>
   <div id="phases-list"><div style="text-align:center;padding:32px;color:var(--gray400)">Importe um arquivo XLSX para ver as phases</div></div>
 </div>
-
+ 
 <!-- ALERTAS -->
 <div id="pane-alert" class="pane">
   <div class="filters">
@@ -198,7 +198,7 @@ input[type=file]{display:none}
   <div class="stats" id="alert-stats" style="grid-template-columns:repeat(3,1fr)"></div>
   <div id="alert-list"><div style="text-align:center;padding:32px;color:var(--gray400)">Importe um arquivo XLSX para ver os alertas</div></div>
 </div>
-
+ 
 <!-- RELATÓRIO -->
 <div id="pane-rel" class="pane">
   <div class="card no-print">
@@ -218,17 +218,17 @@ input[type=file]{display:none}
   </div>
   <div id="rel-preview"><div style="text-align:center;padding:40px;color:var(--gray400)">Selecione os filtros e clique em Gerar relatório</div></div>
 </div>
-
+ 
 </main>
-
+ 
 <script>
 let DADOS=[], HORAS_CUSTOM={};
 const HOJE=new Date().toISOString().slice(0,10);
-
+ 
 // Feriados BR 2026
 const FERIADOS=['2026-01-01','2026-02-16','2026-02-17','2026-04-03','2026-04-21',
   '2026-05-01','2026-06-04','2026-09-07','2026-10-12','2026-11-02','2026-11-15','2026-12-25'];
-
+ 
 function diasUteis(ano, mes) {
   const d1 = new Date(ano, mes-1, 1);
   const d2 = new Date(ano, mes, 0);
@@ -239,27 +239,27 @@ function diasUteis(ano, mes) {
   }
   return n;
 }
-
+ 
 function horasEstimadas(user) {
   if(HORAS_CUSTOM[user]!==undefined) return HORAS_CUSTOM[user];
   const mes=document.getElementById('c-mes')?.value||'2026-05';
   const [ano,m]=mes.split('-').map(Number);
   return diasUteis(ano,m)*8;
 }
-
+ 
 const fmtMin=m=>{m=Math.round(m);return Math.floor(m/60)+'h '+(m%60).toString().padStart(2,'0')+'min'};
 const fmtD=d=>d?d.slice(8,10)+'/'+d.slice(5,7)+'/'+d.slice(0,4):'-';
 const nomeProp=u=>u.split('.').map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(' ');
 const getDesc=r=>[r.nota,r.sourceText,r.todo].find(x=>x&&x.trim()&&x.trim()!=='-')||r.fase||'-';
 const chaveGrupo=desc=>!desc||desc==='-'?'Outros':desc.split(/[\-–(]/)[0].trim().split(' ').slice(0,6).join(' ').trim()||desc;
-
+ 
 function sw(id){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
   document.getElementById('pane-'+id).classList.add('on');
   event.currentTarget.classList.add('on');
 }
-
+ 
 function handleFile(file){
   if(!file)return;
   const reader=new FileReader();
@@ -278,7 +278,7 @@ function handleFile(file){
             nota:(r['Note']||'').trim(),sourceText:(r['Source Text']||'').trim(),
             todo:(r['Todo']||'').trim(),status:(r['Billing status']||'').trim()};
         }).filter(r=>r.data&&r.data.match(/^\d{4}-\d{2}/)&&r.minutos>0);
-
+ 
       HORAS_CUSTOM={};
       const b=document.getElementById('file-badge');
       b.textContent='✓ '+file.name+' — '+DADOS.length+' registros';
@@ -290,7 +290,7 @@ function handleFile(file){
   };
   reader.readAsArrayBuffer(file);
 }
-
+ 
 function popularFiltros(){
   const cli=[...new Set(DADOS.map(d=>d.cliente))].filter(Boolean).sort();
   const usr=[...new Set(DADOS.map(d=>d.user))].filter(Boolean).sort();
@@ -310,7 +310,7 @@ function popularFiltros(){
   ['c-ini','r-ini','p-ini'].forEach(id=>document.getElementById(id).value=ini);
   ['c-fim','r-fim','p-fim'].forEach(id=>document.getElementById(id).value=fim);
 }
-
+ 
 function cascata(cliId, profId){
   const cli=document.getElementById(cliId).value;
   const usrs=[...new Set(DADOS.filter(d=>!cli||d.cliente===cli).map(d=>d.user))].filter(Boolean).sort();
@@ -322,9 +322,9 @@ function cascata(cliId, profId){
   else if(profId==='r-prof') {}
   else if(profId==='p-prof') renderPhases();
 }
-
+ 
 function atualizarHorasEstimadas(){ HORAS_CUSTOM={}; renderConf(); }
-
+ 
 function getSelectedProfs(selectId){
   const s=document.getElementById(selectId);
   if(s.multiple){
@@ -333,7 +333,7 @@ function getSelectedProfs(selectId){
   }
   return s.value?[s.value]:null;
 }
-
+ 
 function filtrar(cli, profs, ini, fim){
   return DADOS.filter(d=>
     (!cli||d.cliente===cli)&&
@@ -342,7 +342,7 @@ function filtrar(cli, profs, ini, fim){
     (!fim||d.data<=fim)
   );
 }
-
+ 
 function mostrarPreview(nome){
   const tot=DADOS.reduce((a,d)=>a+d.minutos,0);
   const cli=[...new Set(DADOS.map(d=>d.cliente))];
@@ -364,7 +364,7 @@ function mostrarPreview(nome){
       <button onclick="document.querySelectorAll('.tab')[4].click()" style="background:var(--gray100);color:var(--gray700);padding:7px 14px;border-radius:var(--radius-sm);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">📄 Relatório</button>
     </div>`;
 }
-
+ 
 function renderConf(){
   if(!DADOS.length)return;
   const cli=document.getElementById('c-cli').value;
@@ -372,7 +372,7 @@ function renderConf(){
   const ini=document.getElementById('c-ini').value,fim=document.getElementById('c-fim').value;
   const dados=filtrar(cli,profsSel,ini,fim);
   const users=profsSel||[...new Set(dados.map(d=>d.user))].filter(Boolean).sort();
-
+ 
   const rows=users.map(u=>{
     const ld=dados.filter(d=>d.user===u);
     const totMin=ld.reduce((a,d)=>a+d.minutos,0);
@@ -384,7 +384,7 @@ function renderConf(){
     const clientes=[...new Set(ld.map(d=>d.cliente))].join(', ');
     return{u,nome:nomeProp(u),clientes,totMin,hEst,hEstMin,pct,ultima:dts[dts.length-1]||'-',hojeMin,dias:dts.length};
   });
-
+ 
   const totMin=rows.reduce((a,r)=>a+r.totMin,0);
   const totEst=rows.reduce((a,r)=>a+r.hEstMin,0);
   document.getElementById('conf-stats').innerHTML=`
@@ -392,7 +392,7 @@ function renderConf(){
     <div class="stat"><div class="stat-val">${fmtMin(totEst)}</div><div class="stat-lbl">Total estimado</div></div>
     <div class="stat"><div class="stat-val">${rows.length}</div><div class="stat-lbl">Profissionais</div></div>
     <div class="stat"><div class="stat-val">${dados.length}</div><div class="stat-lbl">Registros</div></div>`;
-
+ 
   document.getElementById('conf-table').innerHTML=`
     <thead><tr>
       <th>Profissional</th><th>Cliente(s)</th><th>Última entrada</th>
@@ -418,7 +418,7 @@ function renderConf(){
       </tr>`;
     }).join('')}</tbody>`;
 }
-
+ 
 function renderPhases(){
   if(!DADOS.length)return;
   const cli=document.getElementById('p-cli').value;
@@ -426,7 +426,7 @@ function renderPhases(){
   const ini=document.getElementById('p-ini').value,fim=document.getElementById('p-fim').value;
   const group=document.getElementById('p-group').value;
   const dados=filtrar(cli,prof?[prof]:null,ini,fim);
-
+ 
   const grupos={};
   dados.forEach(d=>{
     let k;
@@ -440,14 +440,14 @@ function renderPhases(){
     if(existing) existing.min+=d.minutos;
     else grupos[k].itens.push({key:subKey,min:d.minutos});
   });
-
+ 
   const totalGeral=dados.reduce((a,d)=>a+d.minutos,0);
   const sorted=Object.entries(grupos).sort((a,b)=>b[1].total-a[1].total);
-
+ 
   let html=`<div style="margin-bottom:12px;font-size:12px;color:var(--gray400)">
     Total: <strong style="color:var(--gray900)">${fmtMin(totalGeral)}</strong> em <strong style="color:var(--gray900)">${sorted.length}</strong> ${group==='phase'?'phases':group==='user'?'profissionais':'clientes'}
   </div>`;
-
+ 
   sorted.forEach(([key,val])=>{
     const pct=Math.round((val.total/totalGeral)*100);
     const subSorted=val.itens.sort((a,b)=>b.min-a.min);
@@ -474,10 +474,10 @@ function renderPhases(){
       </div>
     </div>`;
   });
-
+ 
   document.getElementById('phases-list').innerHTML=html||'<div style="text-align:center;padding:24px;color:var(--gray400)">Nenhum dado encontrado para os filtros selecionados</div>';
 }
-
+ 
 function renderAlertas(){
   if(!DADOS.length)return;
   const cli=document.getElementById('a-cli').value;
@@ -518,7 +518,7 @@ function renderAlertas(){
         <span class="badge b-info" style="flex-shrink:0">${a.cliente}</span>
       </div></div>`).join('');
 }
-
+ 
 function renderRel(){
   if(!DADOS.length){alert('Importe um arquivo primeiro.');return;}
   const cli=document.getElementById('r-cli').value;
@@ -528,12 +528,12 @@ function renderRel(){
   if(!cli&&!profsSel){alert('Selecione pelo menos um cliente ou profissional.');return;}
   const dados=filtrar(cli,profsSel,ini,fim);
   if(!dados.length){document.getElementById('rel-preview').innerHTML='<div style="text-align:center;padding:32px;color:var(--gray400)">Nenhum lançamento encontrado</div>';return;}
-
+ 
   const users=profsSel||[...new Set(dados.map(d=>d.user))].filter(Boolean).sort();
   const totGeral=dados.reduce((a,d)=>a+d.minutos,0);
   const mesStr=ini?new Date(ini+'T12:00:00').toLocaleDateString('pt-BR',{month:'long',year:'numeric'}):'';
   const nomesProfs=users.map(nomeProp).join(', ');
-
+ 
   // Agrupamento por profissional → por atividade real
   let secoes='';
   users.forEach(u=>{
@@ -545,7 +545,7 @@ function renderRel(){
     const lancMap={};
     ud.forEach(d=>{const k=d.data+'||'+getDesc(d);if(!lancMap[k])lancMap[k]={data:d.data,desc:getDesc(d),min:0};lancMap[k].min+=d.minutos;});
     const lancs=Object.values(lancMap).sort((a,b)=>a.data.localeCompare(b.data));
-
+ 
     secoes+=`
       ${users.length>1?`<div style="background:var(--navy2);padding:10px 18px;margin:20px -18px 14px;color:#fff;font-weight:600;font-size:13px">👤 ${nomeProp(u)} <span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.5);margin-left:8px">${fmtMin(uTot)}</span></div>`:''}
       <div class="rep-section">Relatório das atividades</div>
@@ -572,7 +572,7 @@ function renderRel(){
           </tbody></table>
       </div>`;
   });
-
+ 
   document.getElementById('rel-preview').innerHTML=`
     <div class="card" id="rel-content">
       <div class="rep-cover">
@@ -583,20 +583,20 @@ function renderRel(){
         </div>
         <div class="rep-cover-sub" style="margin-top:10px">${fmtD(ini)} a ${fmtD(fim)}${cli?' · '+cli:''}</div>
       </div>
-
+ 
       <div class="stats" style="margin-bottom:20px">
         <div class="stat"><div class="stat-val">${fmtMin(totGeral)}</div><div class="stat-lbl">Total lançado</div></div>
         <div class="stat"><div class="stat-val">${users.length}</div><div class="stat-lbl">Profissional(is)</div></div>
         <div class="stat"><div class="stat-val">${dados.length}</div><div class="stat-lbl">Registros</div></div>
         <div class="stat"><div class="stat-val">${[...new Set(dados.map(d=>d.data))].length}</div><div class="stat-lbl">Dias ativos</div></div>
       </div>
-
+ 
       ${secoes}
-
+ 
       <div style="border-top:1px solid var(--gray200);padding-top:14px;display:flex;gap:10px;margin-top:4px" class="no-print">
         <button onclick="window.print()" style="background:var(--blue);color:#fff;padding:9px 20px;border-radius:var(--radius-sm);border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">🖨️ Imprimir / Salvar PDF</button>
       </div>
-
+ 
       <div style="border-top:1px solid var(--gray200);padding-top:10px;margin-top:10px;text-align:center">
         <span style="font-size:11px;color:var(--gray400)">Bravi Solutions · www.bravi.com.br · hello@bravi.com.br</span>
       </div>
